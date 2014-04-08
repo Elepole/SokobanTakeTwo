@@ -2,6 +2,7 @@ package com.supinfo.sokoban;
 
 import java.util.Scanner;
 
+import com.supinfo.sokoban.game.SaveMap;
 import com.supinfo.sokoban.unused.Plateau;
 
 public class Editor {

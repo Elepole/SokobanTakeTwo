@@ -11,11 +11,6 @@ public class Main {
 		Plateau test = new Plateau();
 		System.out.println(test.toString());
 		
-		test.testCastingCaseToPlayer();
-		System.out.println(test.toString());
-		
-		test.testCastingPlayertoCase();
-		System.out.println(test.toString());
 		 /*
 		//Petite aide afin de generer un niveau par defaut facilement
 		 

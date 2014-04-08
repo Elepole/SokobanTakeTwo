@@ -1,14 +1,13 @@
-package com.supinfo.sokoban;
+package com.supinfo.sokoban.game;
 
 import com.supinfo.sokoban.unused.Case;
 
-public class Joueur {
+public class Move {
 						
 	
 						//ATTRIBUTS :
 	private int score;
-	private int xJoueur;
-	private int yJoueur;
+	private Game game;
 	private int xCaisse;
 	private int yCaisse;
 	private int xColli;
@@ -20,7 +19,7 @@ public class Joueur {
 	
 						//CONSTRUCTEUR
 	
-	Joueur(Case map[][], int largeurMap, int hauteurMap, int x_joueur, int y_joueur){
+	public Move(Case map[][], int largeurMap, int hauteurMap, int x_joueur, int y_joueur){
 		score = 0;
 		xJoueur = x_joueur;
 		yJoueur = y_joueur;
@@ -38,7 +37,7 @@ public class Joueur {
 		if(gestionCollision(map,xCaisse,yCaisse,1) == true){	//Si on � le droit de se d�placer  
 			
 			switch(directionJoueur){
-				
+				//TODO Switch all setContenue by a new Case()
 					case "HAUT":
 						if(map[xCaisse][yCaisse].getCible() == 0){	//Si la case ou l'on se trouve n'est pas un espace de stockage...
 							map[xCaisse][yCaisse].setContenu(" ");	//...le contenu de la case sera un espace vide.
@@ -94,58 +93,44 @@ public class Joueur {
 			}
 	}
 	
-	public void deplacerJoueur(Case map[][]){
+	private void currentCaseIsCible(Case c){
+		if(c.getCible() == 0){	//Si la case ou l'on se trouve n'est pas un espace de stockage...
+			c.setContenu(" ");	//...le contenu de la case sera un espace vide.
+		}
+		else{
+			c.setContenu("O");	//...Autrement si c'est un espace de stockage le contneu de la case sera un espace de stokage
+		}
+	}
+	
+	public static void deplacerJoueur(Game game,String directionJoueur){
 		
 		if(gestionCollision(map,xJoueur,yJoueur,0) == true){	//Si on � le droit de se d�placer  
 		
 		switch(directionJoueur){
 			
 				case "HAUT":
-					if(map[xJoueur][yJoueur].getCible() == 0){	//Si la case ou l'on se trouve n'est pas un espace de stockage...
-						map[xJoueur][yJoueur].setContenu(" ");	//...le contenu de la case sera un espace vide.
-					}
-					else{
-						map[xJoueur][yJoueur].setContenu("O");	//...Autrement si c'est un espace de stockage le contneu de la case sera un espace de stokage
-					}
-					yJoueur--;
-					map[xJoueur][yJoueur].setContenu("X");	//enfin on d�place le joueur et on change le contenu de la case afin qu'elle contienne le joueur
+					this.currentCaseIsCible(game.getCase(game.getX_joueur(), game.getY_joueur()));
+					game.joueurHaut();
+					game.getCase(game.getX_joueur(), game.getY_joueur()).setContenu("X");	//enfin on d�place le joueur et on change le contenu de la case afin qu'elle contienne le joueur
 					break;
 			
 				case "BAS":
-					if(map[xJoueur][yJoueur].getCible() == 0){
-						map[xJoueur][yJoueur].setContenu(" ");
-					}
-					else{
-						map[xJoueur][yJoueur].setContenu("O");
-					}
+					this.currentCaseIsCible(map[xJoueur][yJoueur]);
 					yJoueur++;
 					map[xJoueur][yJoueur].setContenu("X");
 					break;
 			
 				case "GAUCHE":
-					if(map[xJoueur][yJoueur].getCible() == 0){
-						map[xJoueur][yJoueur].setContenu(" ");
-					}
-					else{
-						map[xJoueur][yJoueur].setContenu("O");
-					}
+					this.currentCaseIsCible(map[xJoueur][yJoueur]);
 					xJoueur--;
 					map[xJoueur][yJoueur].setContenu("X");
 
 					break;
 			
 				case "DROITE":
-					if(map[xJoueur][yJoueur].getCible() == 0){
-						map[xJoueur][yJoueur].setContenu(" ");
-					}
-					else{
-						map[xJoueur][yJoueur].setContenu("O");
-					}
+					this.currentCaseIsCible(map[xJoueur][yJoueur]);
 					xJoueur++;
 					map[xJoueur][yJoueur].setContenu("X");
-					break;
-					
-				case "RIEN":
 					break;
 			
 				default :

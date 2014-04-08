@@ -1,4 +1,4 @@
-package com.supinfo.sokoban;
+package com.supinfo.sokoban.game;
 
 /*
 Exemple d'utilisation de LoadMap.
@@ -13,21 +13,22 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+import com.supinfo.sokoban.level.Niveau;
 import com.supinfo.sokoban.unused.Plateau;
 
 public class LoadMap {
 	
-	private Plateau map;
+	private Niveau niveau;
 
 	public LoadMap(String mapName){
 		
-		map = null;
+		niveau = null;
 		
 		try
 	      {
 	         FileInputStream fileIn = new FileInputStream(mapName+".sok");
 	         ObjectInputStream in = new ObjectInputStream(fileIn);
-	         map = (Plateau) in.readObject();
+	         niveau = (Niveau) in.readObject();
 	         in.close();
 	         fileIn.close();
 	      }catch(IOException i)
@@ -42,7 +43,7 @@ public class LoadMap {
 	      }
 	}
 	
-	public Plateau getMap() {
-		return map;
+	public Niveau getNiveau() {
+		return niveau;
 	}
 }

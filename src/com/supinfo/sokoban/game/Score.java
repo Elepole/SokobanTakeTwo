@@ -1,4 +1,4 @@
-package com.supinfo.sokoban;
+package com.supinfo.sokoban.game;
 
 import java.io.FileReader ;
 import java.io.FileWriter ;

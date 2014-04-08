@@ -1,6 +1,8 @@
-package com.supinfo.sokoban;
+package com.supinfo.sokoban.view;
 import java.util.Scanner;
 
+import com.supinfo.sokoban.game.LoadMap;
+import com.supinfo.sokoban.game.Move;
 import com.supinfo.sokoban.unused.Case;
 import com.supinfo.sokoban.unused.Plateau;
 
@@ -13,7 +15,7 @@ public class Play {
 	private int nb_caissesRangees;
 	private int score =0;
 	private Plateau  plateau = null;
-	private Joueur player ;
+	private Move player ;
 	Scanner saisieClavier;
 	String directionChoisie;
 	
@@ -45,10 +47,10 @@ public class Play {
 		LoadMap loading = new LoadMap(level);
 		plateau = loading.getMap();
 		largeurMap = plateau.getLargeurPlateau();
-		hauteurMap = plateau.getLargeurPlateau();
+		hauteurMap = plateau.getHauteurPlateau();
 		nb_cibles = plateau.getNb_cibles();
 		nb_caissesRangees = 0;
-		player = new Joueur(plateau.getPlateau(), largeurMap, hauteurMap, plateau.getX_joueur(), plateau.getY_joueur());
+		player = new Move(plateau.getPlateau(), largeurMap, hauteurMap, plateau.getX_joueur(), plateau.getY_joueur());
 		
 	}
 	

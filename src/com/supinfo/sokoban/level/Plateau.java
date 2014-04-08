@@ -5,13 +5,9 @@ public class Plateau implements java.io.Serializable{
 	//Attributs
 	private static final long serialVersionUID = 1002L;
 	private int ordonneePlateau;
-	private int abscissePlateau;
-	private int nb_cibles;	
-	private String nomPlateau;
+	private int abscissePlateau;	
 	private Case plateau[][];
-	private String contenuePlateau;
-	private int x_joueur;
-	private int y_joueur;
+	
 	
 	
 
@@ -19,57 +15,70 @@ public class Plateau implements java.io.Serializable{
 		// TODO Auto-generated constructor stub
 		ordonneePlateau = 8;
 		abscissePlateau = 8;
-		nomPlateau="temp";
-		contenuePlateau=null;
-		x_joueur = 1;
-		y_joueur = 1;
+		
+		this.init();
+	}
+	
+	protected void init(){
 		plateau = new Case[abscissePlateau][ordonneePlateau];
 		for(int x = 0; x < abscissePlateau; x++) {
 			for(int y =0; y < ordonneePlateau; y++) {
-				plateau[x][y] = new Case(x, y, false);
+				plateau[x][y] = new Case(x, y, 0);
 			}
 		}
 	}
 	
 	@Override
 	public String toString(){
-		contenuePlateau="";
+		String contenuePlateau="";
 		for( int x =0; x < abscissePlateau; x++){
 			for( int y =0; y < ordonneePlateau; y++ ){
 				contenuePlateau = contenuePlateau + plateau[x][y].toString();
 			}
-		}
-		
+			contenuePlateau += "\n";
+		}	
 		return contenuePlateau;
 	}
 	
-	public void testCastingCaseToPlayer(){
-		plateau[1][1] = new Player();
+	public int getNbCible() {
+		int result=0;
+		for( int x =0; x < abscissePlateau; x++){
+			for( int y =0; y < ordonneePlateau; y++ ){
+				result += (plateau[x][y].isCible()?1:0); 
+			}
+		}	
+		return result;
 	}
 	
-	public void testCastingPlayertoCase(){
-		plateau[1][1] = new Case();
+	//Compatibilite avant d'utiliser toString() dans le reste du code
+	public void afficherPlateau(){
+		System.out.println(this.toString());
 	}
 	
-	public void setPlateauCase(int coordX, int coordY, String contenu, boolean cible){
-		switch (contenu){
-		case "X": 
-			plateau[coordX][coordY] = new Player(coordX,coordY,cible);
-			break;
-		case "B":
-			plateau[coordX][coordY] = new Box(coordX,coordY,cible);
-			break;
-		case "=":
-			plateau[coordX][coordY] = new Wall(coordX,coordY);
-			break;
-		case " ":
-			plateau[coordX][coordY] = new Case(coordX,coordY,cible);
-			break;
-		default:
-			break;
-		
-		}
-		 
+	
+
+	public int getOrdonneePlateau() {
+		return ordonneePlateau;
+	}
+
+	public int getAbscissePlateau() {
+		return abscissePlateau;
+	}
+
+	public Case[][] getPlateau() {
+		return plateau;
+	}
+	
+	public Case getCase(int x, int y){
+		return plateau[x][y];
+	}
+
+	protected void setPlateau(Case[][] plateau) {
+		this.plateau = plateau;
+	}
+	
+	public void changeCaseToCase(int x, int y, boolean cible){
+		this.plateau[x][y] = new Case();
 	}
 
 }
